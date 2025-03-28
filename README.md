@@ -69,7 +69,7 @@ Defines the sequential execution of tasks, ensuring proper data processing flow.
 #### Environment Configuration
 
 ```yaml
-env: bespin-us-demo
+env: <PROJECT_NAME>
 webhook_url: "https://chat.googleapis.com/v1/spaces/..."
 ```
 
@@ -85,27 +85,27 @@ data_load_tasks:
   intial_load:
     queryfilepath: "/home/airflow/gcs/dags/landing_to_core_load/history_load/initial_load.sql"
     replace_parameters:
-      project: "bespin-us-demo"
+      project: "<PROJECT_NAME>"
   
   merge_asset_flow:
     queryfilepath: "/home/airflow/gcs/dags/landing_to_core_load/history_load/merge_bet_asset_flow.sql"
     replace_parameters:
-      project: "bespin-us-demo"
+      project: "<PROJECT_NAME>"
   
   merge_bet:
     queryfilepath: "/home/airflow/gcs/dags/landing_to_core_load/history_load/merge_bet.sql"
     replace_parameters:
-      project: "bespin-us-demo"
+      project: "<PROJECT_NAME>"
   
   merge_bet_leg:
     queryfilepath: "/home/airflow/gcs/dags/landing_to_core_load/history_load/merge_bet_leg.sql"
     replace_parameters:
-      project: "bespin-us-demo"
+      project: "<PROJECT_NAME>"
   
   postprocess_audit:
     queryfilepath: "/home/airflow/gcs/dags/landing_to_core_load/history_load/merge_audit_etl_core_be_bet.sql"
     replace_parameters:
-      project: "bespin-us-demo"
+      project: "<PROJECT_NAME>"
 ```
 
 - **queryfilepath**: Specifies the location of the SQL file.
@@ -136,14 +136,14 @@ hash: '*'
 custom_query_type: row
 source_conn:
   source_type: BigQuery #changable field
-  project_id: bespin-us-demo #changable field
+  project_id: <PROJECT_NAME> #changable field
 target_conn:
   source_type: Snowflake
   user: SNOWFLAKE  #changable field
   password: ####### #changable field
   account: THFEZAE-BE84871 #changable field
   database: SNOWFLAKE_SAMPLE_DATA/TPCH_SF1 #changable field
-source_query: "SELECT run_id as C_CUSTKEY, validation_status as C_NAME FROM `bespin-us-demo.pso_data_validator.results`, UNNEST(labels) AS label where label.value ='scheduled__2025-03-08T12:00:00+00:00' and validation_status = 'fail'" #changable field
+source_query: "SELECT run_id as C_CUSTKEY, validation_status as C_NAME FROM `<PROJECT_NAME>.pso_data_validator.results`, UNNEST(labels) AS label where label.value ='scheduled__2025-03-08T12:00:00+00:00' and validation_status = 'fail'" #changable field
 target_query: "select C_NAME as C_CUSTKEY, C_NAME from TPCH_SF1.customer order by C_CUSTKEY limit 10" #changable field
 
 calculated_fields:
@@ -313,7 +313,7 @@ single_table_validation:
   single_table_validation:
     table_1:
       table_details:
-        project: "bespin-us-demo"
+        project: "<PROJECT_NAME>"
         dataset: "pso_data_validator"
         table_name: "results"
         
@@ -325,7 +325,7 @@ single_table_validation:
     
     table_2:
       table_details:
-        project: "bespin-us-demo"
+        project: "<PROJECT_NAME>"
         dataset: "pso_data_validator"
         table_name: "results"
         
